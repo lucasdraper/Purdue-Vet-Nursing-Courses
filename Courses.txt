@@ -1,0 +1,45 @@
+10500	Intro to Vet Nursing		1
+11400	Anatomy 1		2
+13500	Physiology 1		1
+11600	Anatomy 2	[11400c]	2
+13600	Physiology 2	[13500c]	1
+23000	Public and Occupational Health	[10500c]	1
+23500	Pharmacology 1	[10500, 13500]	1
+20200	Pharmacy Procedures	[10500c]	1
+15001	Clinical Pathology 1	[10500, 13600]	2
+25001	Clinical Pathology 2	[15001]	2
+22300	Pharmacy Mentorship	[20200]	0.5
+24000	Nutrition	[13600]	1
+23600	Pharmacology 2	[23500]	1
+22700	Clinical Pathology Mentorship	[25001c, 22300]	2
+14001	Small Animal Nursing 1	[10500, 11600, 13500]	3
+14700	Surgical Nursing	[10500, 11600]	1
+23001	Small Animal Nursing 2	[14001]	2.5
+20500	Small Animal Nursing Mentorship 1	[14001c, 22300]	1.5
+14801	Large Animal Nursing 1	[11600, 23600]	2
+23900	Dentistry	[11600]	0.5
+21200	Surgical Nursing Mentorship	[14700c, 22300]	0.5
+23701	Large Animal Nursing 2	[14801]	3
+20600	Small Animal Nursing Mentorship 2	[14700c, 23900c, 23001c, 22300]	1
+23300	Optho; Derm and Oncology	[11600, 13600, 23600]	1
+23200	Principals of Anestesia	[13600, 23600, 14001, 20200]	3
+22501	Parasitology	[23600, 15001, 14001, 14801]	2
+20700	Small Animal Nursing Mentorship 3	[14700c, 23001c, 23300c, 22300]	1
+23100	Diagnostic Imaging	[10500, 11600]	3
+21400	Parasitology Mentorship	[22501c, 22300]	0.5
+23400	Microbiology	[11600, 13600, 23600]	2
+21500	Small Animal Diagnostic Imaging Mentorship 1	[23100, 20500c, 22300]	1
+21300	Microbiology Mentorship	[23400c, 22300]	0.5
+22900	Lab Animal Medicine	[11600, 13600, 20200]	2
+21000	Small Animal Anestesia Mentorship	[23200, 20600]	2
+24800	Understanding Animal Disease	[14001, 14801, 22501, 23400, 25001]	2
+24500	Veterinary Management Topics	[10500, 20200, 11600, 13600]	1.5
+21700	Large Animal Diagnostic Imaging Mentorship 	[21500, 20900c]	0.5
+20800	Farm Animal Nursing Mentorship	[14700c, 23701c, 22300]	1
+21600	Small Animal Diagnostic Imaging Mentorship 2	[21500, 23900]	1.5
+22400	Necropsy Mentorship	[23400, 22501, 23000c, 23001, 23701, 22300]	0.5
+20900	Equine Nursing Mentorship	[14700c, 23001c, 23300c, 22300]	1
+21100	Large Animal Anestesia	[23200, 20900c]	1
+22600	Lab Animal Mentorship	[22900, 22300]	1
+22800	Integrations	[23100, 14700, 23200, 24800]	2
+22500	Advanced Clinical Mentorship	[20500, 20600, 20700, 20800c, 20900c, 21000, 21100c, 21200, 21300, 21400, 21500, 21600c, 21700c, 22300, 22400c, 22600c, 22700]	1.5	
