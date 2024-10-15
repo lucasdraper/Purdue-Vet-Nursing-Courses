@@ -93,6 +93,8 @@ def eligible_courses(course_list, taken):
             if prereq == "":    #if there are no prerequisites, the course is eligible
                 continue
             else:
+                if prereq[-1] == 'c':   #if the prerequisite is concurrent, the course is eligible
+                    prereq = prereq[:-1]
                 prereq_course = find_class(course_list, prereq)
                 if prereq_course not in taken:  #if the prerequisite is not in the taken list, the course is not eligible and the flag is changes
                     elig_flag = False
@@ -113,36 +115,41 @@ def concurrent_courses (course_list, taken, eligible):
     Input - List of Course objects (all courses), List of Course objects (courses taken), List of Course objects (courses eligible to take)
     Output - List of Course objects (courses eligible to take concurrently), List of Course objects (eligible classes required to take with the concurrent courses)
     """
-    concurrent = []
-    prereq_concurrent = []
+    concurrent_prereq = []
     #loops through the courses in the course list
     for course in course_list:
         #checks if the course has the concurrent flag
         if course.concurrent:
             prereqs = course.pre_reqs
-            con_flag = True
-            #loops through the prerequisites for the course
+            con_flags = [None]*len(prereqs)
+            counter = 0
+            c_list = []
             for prereq in prereqs:
-                prereq_course = find_class(course_list, prereq)
-                if prereq_course not in eligible or prereq_course not in taken: #if the prerequisite is not in the eligible list, the course is not eligible and the flag is changed
-                    con_flag = False
-                    continue
-            if con_flag:    #if the flag is unchanged, the course is added to the concurrent list
-                concurrent.append(course)
-
-    iter_list = concurrent.copy()
+                if prereq[-1] == 'c':
+                    prereq = prereq[:-1]
+                    prereq_course = find_class(course_list, prereq)
+                    if prereq_course in eligible:
+                        con_flags[counter] = True
+                        c_list.append(prereq_course)
+                    else:
+                        con_flags[counter] = False
+                else:
+                    prereq_course = find_class(course_list, prereq)
+                    if prereq_course in taken:
+                        con_flags[counter] = True
+                    else:
+                        con_flags[counter] = False
+                counter += 1
+            if False not in con_flags:
+                concurrent_prereq.append([course,c_list])
+            
+    iter_list = concurrent_prereq.copy()
     #removes courses that are already taken
-    for eli_course in iter_list:    
-        if eli_course in taken:
-            concurrent.remove(eli_course)
+    for i in range(len(iter_list)):    
+        if iter_list[i][0] in taken:
+            concurrent_prereq.remove(iter_list[i])
+        if iter_list[i][0] in eligible:
+            concurrent_prereq.remove(iter_list[i])
 
-    #loops through the concurrent courses to find the prerequisites that are eligible and adds them to the prereq_concurrent list
-    for course in concurrent:
-        remaining = []
-        for prereq in course.pre_reqs:
-            prereq_course = find_class(course_list, prereq)
-            if prereq_course not in taken:
-                remaining.append(prereq_course)
-        prereq_concurrent.append(remaining)
                 
-    return concurrent, prereq_concurrent
+    return concurrent_prereq

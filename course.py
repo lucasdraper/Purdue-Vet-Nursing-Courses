@@ -13,7 +13,5 @@ class Course:
             if cur == '':
                 continue
             if cur[-1] == 'c':
-                self.concurrent = True
-                self.pre_reqs.append(cur[:-1])
-            else:
-                self.pre_reqs.append(cur)
+                self.concurrent = True    
+            self.pre_reqs.append(cur)

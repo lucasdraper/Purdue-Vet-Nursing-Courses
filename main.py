@@ -16,14 +16,15 @@ def main():
     for course in eligible:
         print(course.course_number+ ": "+ course.course_name)
 
-    concurrent,req = concurrent_courses(course_list, taken, eligible)
+    concurrent = concurrent_courses(course_list, taken, eligible)
     print()
     print("You are eligible to take the following concurrent courses: ")
     for i in range(len(concurrent)):
-        print(concurrent[i].course_number+":",concurrent[i].course_name)
+        print(concurrent[i][0].course_number+":",concurrent[i][0].course_name)
         print("\t Required to take with: ",end="")
-        for j in range(len(req[i])):
-            print(req[i][j].course_number+":",req[i][j].course_name,end=", ")
+        for j in range(len(concurrent[i][1])-1):
+            print(concurrent[i][1][j].course_number+":",concurrent[i][1][j].course_name,end=", ")
+        print(concurrent[i][1][-1].course_number+":",concurrent[i][1][-1].course_name)
     print()
 
 
