@@ -48,6 +48,14 @@ def main():
 
 
     eligible = eligible_courses(course_list, taken)
+    management = find_class(course_list, "24500")
+    if management in eligible:
+        check = input("Have you completed the required 15 hours in a clinic? (y/n): ")
+        while check != 'y' and check != 'n':
+            print("Invalid input")
+            check = input("Enter 'y' or 'n': ")
+        if check == 'n':
+            eligible.remove(management)
     print("You are eligible to take the following courses: ")
     for course in eligible:
         print(course.course_number+ ": "+ course.course_name, "(Credits: "+str(course.credits)+")")
