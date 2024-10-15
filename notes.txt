@@ -1,17 +1,25 @@
-prereq:
-- have taken?
-    - yes
-        - can take
-    - no
-        - cannot take
+Logic Diagram:
 
-co-req
-- have taken?  
-    - yes
-        - can take
-    - no
-        - am I taking other class
-            - yes
-                - can take
-            - no
-                - cannot take
+    prereq:
+    - have taken?
+        - yes
+            - can take
+        - no
+            - cannot take
+
+    co-req
+    - have taken?  
+        - yes
+            - can take
+        - no
+            - am I taking other class
+                - yes
+                    - can take
+                - no
+                    - cannot take
+
+To Add:
+    - check for 24500 if you have done the 15 hours of vet work
+    - Allow you to change the entered courses if you mistype
+    - Enter the number of credits you want to take and work out all the options
+        - also maybe specify a list of courses you want to take and work out what else you can take to get to your credit limit

@@ -11,10 +11,20 @@ def main():
     for course in taken:
         print(course.course_number+ ": "+ course.course_name)
     print()
-    eligible, concurrent = eligible_courses(course_list, taken)
+    eligible = eligible_courses(course_list, taken)
     print("You are eligible to take the following courses: ")
     for course in eligible:
-        print(course.course_name)
+        print(course.course_number+ ": "+ course.course_name)
+
+    concurrent,req = concurrent_courses(course_list, taken, eligible)
+    print()
+    print("You are eligible to take the following concurrent courses: ")
+    for i in range(len(concurrent)):
+        print(concurrent[i].course_number+":",concurrent[i].course_name)
+        print("\t Required to take with: ",end="")
+        for j in range(len(req[i])):
+            print(req[i][j].course_number+":",req[i][j].course_name,end=", ")
+    print()
 
 
 main()
