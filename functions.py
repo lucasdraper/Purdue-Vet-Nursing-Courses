@@ -39,6 +39,37 @@ def find_class(course_list, number):
             return course
     return None #default if cannot find the course
 
+def add_course(course_list,taken):
+    """Function to add a course the user has taken
+    Input - List of Course objects (all courses), List of Course objects (courses taken)
+    User Input - course number
+    Output - List of Course objects (courses taken)
+    """
+
+    course = input("Enter the course number: ")
+    course = course.strip()
+    if course.isdigit() == False: #checks if the input is a number, if it is, they might be saying they are done
+        user = input("Are you done entering courses? (y/n): ")
+        if user == 'y': #if they are done, the loop ends
+            return None
+        else: #else they made a mistake, give them a second chance
+            course = input("Enter the course number: ")
+    check = find_class(course_list, course)
+    while check == None: #while the course is not in the list, ask for a new course
+        print("Sorry, that course is not in our database.")
+        course = input("Enter the course number: ")
+        if course.isdigit() == False: #checks if the input is a number, if it is, they might be saying they are done
+            user = input("Are you done entering courses? (y/n): ")
+            if user == 'y': #if they are done, the loop ends
+                return None
+            else: #else they made a mistake, give them a second chance
+                course = input("Enter the course number: ")
+        check = find_class(course_list, course)
+
+    if check not in taken: #stops duplicates
+        if check != None: #stops the program from crashing if the course is not in the list
+            return check
+
 def taken_courses(course_list):
     """Function to take in the courses the user has taken and return a list of Course objects
     Input - List of Course objects (all courses)
@@ -51,32 +82,37 @@ def taken_courses(course_list):
     taken = []
     #continues asking for a course number until the user is done entering
     while entering:
-        course = input("Enter the course number: ")
-        course = course.strip()
-        if course.isdigit() == False: #checks if the input is a number, if it is, they might be saying they are done
-            user = input("Are you done entering courses? (y/n): ")
-            if user == 'y': #if they are done, the loop ends
-                entering = False
-                break
-            else: #else they made a mistake, give them a second chance
-                course = input("Enter the course number: ")
-        check = find_class(course_list, course)
-        while check == None: #while the course is not in the list, ask for a new course
-            print("Sorry, that course is not in our database.")
-            course = input("Enter the course number: ")
-            if course.isdigit() == False: #checks if the input is a number, if it is, they might be saying they are done
-                user = input("Are you done entering courses? (y/n): ")
-                if user == 'y': #if they are done, the loop ends
-                    entering = False
-                    break
-                else: #else they made a mistake, give them a second chance
-                    course = input("Enter the course number: ")
-            check = find_class(course_list, course)
-
-        if check not in taken: #stops duplicates
-            if check != None: #stops the program from crashing if the course is not in the list
-                taken.append(check)
+        course = add_course(course_list, taken)
+        if course == None:
+            entering = False
+        else:
+            taken.append(course)
     return taken
+
+def delete_course(course_list, taken):
+    """Function to delete a course the user has taken
+    Input - List of Course objects (all courses), List of Course objects (courses taken)
+    User Input - course number
+    Output - List of Course objects (courses taken)
+    """
+
+    print("Here are the courses you have entered:")
+
+    for i in range(len(taken)):
+        print(taken[i].course_number + ": " + taken[i].course_name)
+    
+    error = input("Enter the number of the course you would like to change: ")
+    if error.isdigit() == False:
+        print("Invalid input")
+        return taken
+    else:
+        class_num = find_class(course_list, error)
+        if class_num == None:
+            print("Invalid input")
+            return taken
+        else:
+            taken.remove(class_num)
+            return taken
 
 def eligible_courses(course_list, taken):
     """Function to find the courses the user is eligible to take based on the courses they have taken
