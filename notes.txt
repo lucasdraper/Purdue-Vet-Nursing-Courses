@@ -1,0 +1,17 @@
+prereq:
+- have taken?
+    - yes
+        - can take
+    - no
+        - cannot take
+
+co-req
+- have taken?  
+    - yes
+        - can take
+    - no
+        - am I taking other class
+            - yes
+                - can take
+            - no
+                - cannot take
