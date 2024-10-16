@@ -71,5 +71,44 @@ def main():
         print(concurrent[i][1][-1].course_number+":",concurrent[i][1][-1].course_name)
     print()
 
+    done = False
+    while not done:
+        print()
+        next_q = input("Would you like to get suggested courses based on preferred credit cap/classes? (y/n): ")
+        while next_q != 'y' and next_q != 'n':
+            print("Invalid input")
+            next_q = input("Enter 'y' or 'n': ")
+        if next_q == 'n':
+            done = True
+        else:
+            print()
+            cap = input("Enter your preferred credit cap: ")
+            while not cap.isdigit():
+                print("Invalid input")
+                cap = input("Enter your preferred credit cap: ")
+            cap = int(cap)
+            print()
+            fav = input("Enter the classes you want to take (seperated by commas) or leave blank for none: ")
+            fav = fav.split(",")
+            fav_courses = []
+            for course in fav:
+                if course != "":
+                    class_name = find_class(course_list, course)
+                    if class_name != None:
+                        fav_courses.append(class_name)
+            print()
+            suggested = suggested_courses(eligible, concurrent, cap, fav_courses)
+
+            print()
+            print("Here are your final courses: ")
+            for course in taken:
+                print(course.course_number+ ": "+ course.course_name)
+            print()
+            for course in suggested:
+                print(course.course_number+ ": "+ course.course_name)
+            print()
+            print("Total credits this semester:", sum([course.credits for course in suggested]))
+            done = True
+
 
 main()

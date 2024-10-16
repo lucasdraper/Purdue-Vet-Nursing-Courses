@@ -1,5 +1,5 @@
 from course import Course
-
+from itertools import combinations
 
 def Readin(file):
     """Function to read in the courses from a file and create a list of Course objects.
@@ -187,5 +187,59 @@ def concurrent_courses (course_list, taken, eligible):
         if iter_list[i][0] in eligible:
             concurrent_prereq.remove(iter_list[i])
 
-                
     return concurrent_prereq
+
+def suggested_courses(eligible, concurrent, cap, fav_courses):
+    running = cap
+    must_take = []
+    if len(fav_courses)!=0:
+        for i in range(len(concurrent)):
+            if concurrent[i][0] in fav_courses:
+                must_take.append(concurrent[i][0])
+                running -= concurrent[i][0].credits
+                for inner in concurrent[i][1]:
+                    must_take.append(inner)
+                    running -= inner.credits
+        for course in fav_courses:
+            if course in must_take:
+                continue
+            else:
+                must_take.append(course)
+                running -= course.credits
+    remaining = []
+    for course in eligible:
+        if course in must_take:
+            continue
+        else:
+            remaining.append(course)
+    
+    print(len(remaining), "courses are eligible to take.")
+    total_options = []
+    for i in range(1,len(remaining)):
+        total_options += combinations(remaining, i)
+    print("There are", len((total_options)), "possible combinations of courses.")
+    feasible_options = []
+    for option in total_options:
+        if sum([course.credits for course in option]) <= running:
+            feasible_options.append(option)
+    if len(feasible_options) == 0:
+        print("There are no feasible options for your preferred credit cap and classes.")
+        return None
+    else:
+        print("Here are some suggested courses:")
+        for i in range(len(feasible_options)):
+            print("Option", str(i+1) +":")
+            for course in feasible_options[i]:
+                print(course.course_number + ": " + course.course_name + " (Credits: " + str(course.credits) + ")")
+            print()
+        selection = input("Enter the number of the option you would like to take: ")
+        while selection.isdigit() == False or int(selection) > len(feasible_options) or int(selection) < 1:
+            print("Invalid input")
+            selection = input("Enter the number of the option you would like to take: ")
+        selection = int(selection)
+        for course in feasible_options[selection-1]:
+            must_take.append(course)
+        return must_take
+        
+            
+    
